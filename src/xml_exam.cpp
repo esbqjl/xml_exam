@@ -1,13 +1,11 @@
-﻿// XML_exam.cpp : Defines the entry point for the application.
-//
-
+﻿// xml_exam.cpp : Defines the entry point for the application.
 #include "../include/xml_exam.h"
 #include <stack>
 #include <iostream>
 using namespace std;
 
 
-// we need to make sure both head and end do not have space
+// We need to make sure both head and end do not have space
 string simpleTrim(const string& str) {
 	size_t start = 0;
 	size_t end = str.length() - 1;
@@ -39,49 +37,51 @@ bool isValidTagName(const string& tag) {
 	}
 	return true;
 }
-
+// Main function to exam each xml
 bool examXml(const string& xml) {
 	if (xml.empty()) {
 		return false;
 	}
+	//make a trim to xml
 	string xml_copy = simpleTrim(xml);
 	stack<string> tagStack;
 	size_t i = 0;
 	while (i < xml_copy.length()) {
 		if (xml_copy[i] != '<') {
 			if (tagStack.empty()) {
-				return false;
+				return false;			// Case: no closing tag
 			}
 			i++;
 			continue;
 		}
 		size_t tagStart = i + 1;
-		bool isClosingTag = (tagStart < xml_copy.length() && xml_copy[tagStart] == '/');
+		bool isClosingTag = (tagStart < xml_copy.length() && xml_copy[tagStart] == '/');	// Check if it's closing tag
 		if (isClosingTag) {
-			tagStart++;
+			tagStart++;							// If closing tag then we need to move index one behind
 		}
 		size_t tagEnd = xml_copy.find('>', tagStart);
 		if (tagEnd == string::npos) {
-			return false;
+			return false;							// Not a complete tag
 		}
 		string fullTag = xml_copy.substr(tagStart, tagEnd-tagStart);
 
 		if (!isValidTagName(fullTag)) {
-			return false;
+			return false;							// Not a valid tag
 		}
 		if (isClosingTag) {
 			if (tagStack.empty() || tagStack.top() != fullTag) {
-				return false;
+				return false;						// We didn't find any corresponding tags
 			}
 			else {
-				tagStack.pop();
+				tagStack.pop();						// Successfully pair, pop
 			}
 		}
 		else {
-			tagStack.push(fullTag);
+			tagStack.push(fullTag);					// New Tag, push
 		}
 		i = tagEnd + 1;
 	}
+	// If all tags pair successfully, then we return true
 	return tagStack.empty();
 }
 
