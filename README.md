@@ -1,6 +1,6 @@
 # XML Exam Project
 
-This project is a C++ application that includes a main executable `xml_exam` and a test executable `test_xml_exam`. It uses CMake for build configuration, and the project is set up to be compatible with C++20. This guide will walk you through building and running the project using CMake, including support for multiple build configurations with `CMakePresets.json`.
+This project is a C++ application that aim to detect whether a xml-like string is a valid xml or not. It uses CMake for build configuration, and the project is set up to be compatible with C++20. This guide will walk you through building and running the project using CMake, including support for multiple build configurations with `CMakePresets.json`.
 
 ## Project Structure
 
@@ -70,12 +70,12 @@ After a successful build, the executables will be located in the `out/build/x64-
 
 - **Run the main application**:
   ```bash
-  ./out/build/x64-debug/xml_exam
+  ./out/build/x64-debug/xml_exam.exe <xml_string>
   ```
 
 - **Run the test executable**:
   ```bash
-  ./out/build/x64-debug/test_xml_exam
+  ./out/build/x64-debug/test_xml_exam.exe
   ```
 
 ## Configuring and Building for Other Presets
